@@ -8,8 +8,8 @@ const programs = [
     preview:
       "A structured 7-day rotating nutrition protocol designed to stabilize blood sugar levels and reduce post-meal glucose spikes.",
     image:
-      "https://www.hjhospitals.org/blogimage/BkK0PFISL40xjrSr46TQuCmhiMvolTTCuMrDnLiP.jpeg",
-    imagePosition: "50% 38%",
+      "https://media.post.rvohealth.io/wp-content/uploads/2020/09/766x415_4_Easy_Superfood_Recipes_to_Fight_Type_2_Diabetes-732x415.jpg",
+    imagePosition: "50% 45%",
     content: `
       <h2>Program Overview</h2>
       <p>The Glycemic Reset Program is a structured 7-day rotating nutrition protocol designed to stabilize blood sugar levels and reduce post-meal glucose spikes. It is ideal for individuals managing prediabetes, diabetes, insulin resistance, or anyone seeking better metabolic control.</p>
@@ -69,8 +69,8 @@ const programs = [
     preview:
       "A targeted nutrition protocol designed to support healthy blood pressure levels through practical dietary modification.",
     image:
-      "https://patientinfo.medicobridge.com/wp-content/uploads/2025/04/well-balanced-diet-and-blood-pressure-control-for-heart-care.webp",
-    imagePosition: "50% 36%",
+      "https://estherafricanfoods.com/wp-content/uploads/2023/02/Healthy-foods-1080x675.webp",
+    imagePosition: "50% 40%",
     content: `
       <h2>Program Overview</h2>
       <p>The Pressure Balance Track is a targeted nutrition protocol designed to support healthy blood pressure levels through dietary modification. It is particularly beneficial for individuals managing hypertension or those at risk of cardiovascular disease.</p>
@@ -128,8 +128,8 @@ const programs = [
     preview:
       "A stage-based nutrition program supporting women from early pregnancy through postpartum recovery.",
     image:
-      "https://www.merrionultrasound.ie/wp-content/uploads/2024/01/pregnancy-nutrition-1024x585.jpg",
-    imagePosition: "50% 28%",
+      "https://solgar.co.uk/cdn/shop/articles/SO_article_nutritionduringpregnany_b269102c-68fb-474d-b11a-01e3f116109d.jpg?v=1770289780&width=1920",
+    imagePosition: "50% 35%",
     content: `
       <h2>Program Overview</h2>
       <p>The Maternal Nourish Protocol is a stage-based nutrition program designed to support women from early pregnancy through postpartum recovery. It addresses the evolving nutritional needs of both mother and baby across each phase of the maternal journey.</p>
@@ -188,8 +188,8 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A structured program focused on sustainable weight reduction through metabolism, balanced nutrition, and timing.",
-    image: "https://healthviewpoints.com/wp-content/uploads/2025/10/image.webp",
-    imagePosition: "50% 40%",
+    image: "https://oldwayspt.twic.pics/wp-content/uploads/2023/10/AfricanHeritageDiet-HERO.png?twic=v1/focus=faces/resize=700/crop=700x422",
+    imagePosition: "50% 38%",
     content: `
       <h2>Program Overview</h2>
       <p>The Metabolic Weight Path is a structured program focused on sustainable weight reduction through improved metabolism, balanced nutrition, and strategic meal timing.</p>
@@ -251,7 +251,7 @@ const programs = [
     preview:
       "A nutrition-focused protocol aimed at improving blood health, energy levels, and iron status.",
     image:
-      "https://imgk.timesnownews.com/story/balanced-diet-for-sickle-cell-disease.gif?tr=w-400,h-300,fo-auto",
+      "https://d1qpnt4t1p05jk.cloudfront.net/wp-content/uploads/2025/10/27100020/image-6838-1024x683.png",
     imagePosition: "50% 42%",
     content: `
       <h2>Program Overview</h2>
@@ -312,8 +312,8 @@ const programs = [
     preview:
       "A household-level nutrition program designed to reduce long-term NCD risk through shared habits.",
     image:
-      "https://rehab2perform.com/wp-content/uploads/2023/04/My-project-1-19-1024x641.jpg",
-    imagePosition: "50% 32%",
+      "https://www.eatingwell.com/thmb/J7236sbbK3zdHVEqYIbJMcSDQNI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-the-african-heritage-diet-01-d241f57031f147d280aa3e5a97f824e0.jpg",
+    imagePosition: "50% 36%",
     content: `
       <h2>Program Overview</h2>
       <p>The Family Preventive Track is a household-level nutrition program designed to reduce the long-term risk of non-communicable diseases (NCDs) through shared dietary habits.</p>
