@@ -157,12 +157,14 @@ function updateProgressUI() {
   // Hide all steps
   document.querySelectorAll('.signup-step').forEach(step => {
     step.hidden = true;
+    step.classList.remove('active');
   });
 
   // Show current step
   const currentStepElement = document.querySelector(`section[data-step="${currentStep}"]`);
   if (currentStepElement) {
     currentStepElement.hidden = false;
+    currentStepElement.classList.add('active');
   }
 
   // Update progress bar
