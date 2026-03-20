@@ -7,6 +7,9 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A structured 7-day rotating nutrition protocol designed to stabilize blood sugar levels and reduce post-meal glucose spikes.",
+    image:
+      "https://www.hjhospitals.org/blogimage/BkK0PFISL40xjrSr46TQuCmhiMvolTTCuMrDnLiP.jpeg",
+    imagePosition: "50% 38%",
     content: `
       <h2>Program Overview</h2>
       <p>The Glycemic Reset Program is a structured 7-day rotating nutrition protocol designed to stabilize blood sugar levels and reduce post-meal glucose spikes. It is ideal for individuals managing prediabetes, diabetes, insulin resistance, or anyone seeking better metabolic control.</p>
@@ -65,6 +68,9 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A targeted nutrition protocol designed to support healthy blood pressure levels through practical dietary modification.",
+    image:
+      "https://patientinfo.medicobridge.com/wp-content/uploads/2025/04/well-balanced-diet-and-blood-pressure-control-for-heart-care.webp",
+    imagePosition: "50% 36%",
     content: `
       <h2>Program Overview</h2>
       <p>The Pressure Balance Track is a targeted nutrition protocol designed to support healthy blood pressure levels through dietary modification. It is particularly beneficial for individuals managing hypertension or those at risk of cardiovascular disease.</p>
@@ -121,6 +127,9 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A stage-based nutrition program supporting women from early pregnancy through postpartum recovery.",
+    image:
+      "https://www.merrionultrasound.ie/wp-content/uploads/2024/01/pregnancy-nutrition-1024x585.jpg",
+    imagePosition: "50% 28%",
     content: `
       <h2>Program Overview</h2>
       <p>The Maternal Nourish Protocol is a stage-based nutrition program designed to support women from early pregnancy through postpartum recovery. It addresses the evolving nutritional needs of both mother and baby across each phase of the maternal journey.</p>
@@ -179,6 +188,8 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A structured program focused on sustainable weight reduction through metabolism, balanced nutrition, and timing.",
+    image: "https://healthviewpoints.com/wp-content/uploads/2025/10/image.webp",
+    imagePosition: "50% 40%",
     content: `
       <h2>Program Overview</h2>
       <p>The Metabolic Weight Path is a structured program focused on sustainable weight reduction through improved metabolism, balanced nutrition, and strategic meal timing.</p>
@@ -239,6 +250,9 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A nutrition-focused protocol aimed at improving blood health, energy levels, and iron status.",
+    image:
+      "https://imgk.timesnownews.com/story/balanced-diet-for-sickle-cell-disease.gif?tr=w-400,h-300,fo-auto",
+    imagePosition: "50% 42%",
     content: `
       <h2>Program Overview</h2>
       <p>The Blood Vitality Program is a nutrition-focused protocol aimed at improving blood health, particularly for individuals at risk of or experiencing anemia and low iron levels.</p>
@@ -297,6 +311,9 @@ const programs = [
     readTime: "6 min read",
     preview:
       "A household-level nutrition program designed to reduce long-term NCD risk through shared habits.",
+    image:
+      "https://rehab2perform.com/wp-content/uploads/2023/04/My-project-1-19-1024x641.jpg",
+    imagePosition: "50% 32%",
     content: `
       <h2>Program Overview</h2>
       <p>The Family Preventive Track is a household-level nutrition program designed to reduce the long-term risk of non-communicable diseases (NCDs) through shared dietary habits.</p>
@@ -398,6 +415,8 @@ function renderProgramExperience() {
     const categoryEl = document.getElementById("article-category");
     const titleEl = document.getElementById("article-title");
     const metaEl = document.getElementById("article-meta");
+    const imageEl = document.getElementById("article-image");
+    const visualEl = document.getElementById("article-visual");
 
     if (!program) {
       articleContainer.innerHTML = '<p class="article-empty">Program article not found.</p>';
@@ -410,6 +429,19 @@ function renderProgramExperience() {
     if (categoryEl) categoryEl.textContent = program.category;
     if (titleEl) titleEl.textContent = program.title;
     if (metaEl) metaEl.textContent = `${program.date} • ${program.readTime}`;
+    if (imageEl && visualEl) {
+      if (program.image) {
+        imageEl.src = program.image;
+        imageEl.alt = program.title;
+        imageEl.style.objectPosition = program.imagePosition || "50% 50%";
+        visualEl.hidden = false;
+      } else {
+        imageEl.removeAttribute("src");
+        imageEl.alt = "";
+        imageEl.style.removeProperty("object-position");
+        visualEl.hidden = true;
+      }
+    }
 
     articleContainer.innerHTML = program.content;
     document.title = `${program.title} | Dine with Mee`;
@@ -418,17 +450,24 @@ function renderProgramExperience() {
 
   if (programsGrid) {
     programsGrid.innerHTML = programs
-      .map(
-        program => `
+      .map(program => {
+        const imageMarkup = program.image
+          ? `<img src="${program.image}" alt="${program.title}" class="editorial-program-card-image" style="object-position:${
+              program.imagePosition || "50% 50%"
+            };" loading="lazy" />`
+          : "";
+
+        return `
           <article class="program-card">
+            ${imageMarkup}
             <p class="program-category">${program.category}</p>
             <h3>${program.title}</h3>
             <p class="program-meta">${program.date} • ${program.readTime}</p>
             <p>${program.preview}</p>
             <button type="button" onclick="openProgram('${program.id}')">View Program</button>
           </article>
-        `
-      )
+        `;
+      })
       .join("");
   }
 }

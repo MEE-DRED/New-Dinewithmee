@@ -114,6 +114,20 @@ body {
   color: var(--editorial-ink);
 }
 
+.article-visual {
+  max-width: 800px;
+  margin: 0 auto 22px;
+}
+
+.article-visual img {
+  width: 100%;
+  height: clamp(200px, 34vw, 360px);
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(13, 59, 43, 0.1);
+  box-shadow: 0 10px 26px rgba(13, 59, 43, 0.1);
+}
+
 .article-content h2 {
   margin: 30px 0 10px;
   font-family: "Playfair Display", Georgia, serif;
@@ -247,6 +261,15 @@ body {
   background: #fff;
 }
 
+.editorial-program-card-image {
+  width: calc(100% + 32px);
+  margin: -18px -16px 14px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 14px 14px 0 0;
+  border-bottom: 1px solid rgba(13, 59, 43, 0.12);
+}
+
 .program-card .program-category {
   margin: 0 0 8px;
   color: var(--editorial-green);
@@ -298,6 +321,10 @@ body {
   .article-content {
     font-size: 16px;
     line-height: 1.75;
+  }
+
+  .editorial-program-card-image {
+    height: 180px;
   }
 
   .article-actions {
