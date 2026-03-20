@@ -213,6 +213,21 @@ ul { list-style: none; }
   border-color: var(--gold-light);
 }
 
+.nav-user-initials {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,151,58,0.55);
+  background: rgba(255,255,255,0.08);
+  color: var(--gold-light);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
 .btn-primary {
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   color: var(--green-deep);
@@ -1802,6 +1817,7 @@ footer {
   }
   .nav-links.mobile-open a { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .nav-actions .btn-login { display: none; }
+  .nav-user-initials { display: none; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .hero-ctas { flex-direction: column; max-width: 280px; }
   .form-card { padding: 32px 24px; }

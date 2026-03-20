@@ -100,97 +100,58 @@
       <section class="signup-step" data-step="2" hidden>
         <h2>Health Profile</h2>
 
-        <!-- Health Goals -->
         <div class="form-group">
-          <label>Health Goals *</label>
-          <div class="radio-chip-grid">
-            <label class="radio-chip">
-              <input type="radio" name="health-goal" value="lose-weight" />
-              <span>Lose weight</span>
-            </label>
-            <label class="radio-chip">
-              <input type="radio" name="health-goal" value="maintain-health" />
-              <span>Maintain health</span>
-            </label>
-            <label class="radio-chip">
-              <input type="radio" name="health-goal" value="manage-condition" />
-              <span>Manage condition</span>
-            </label>
-            <label class="radio-chip">
-              <input type="radio" name="health-goal" value="pregnancy-nutrition" />
-              <span>Pregnancy nutrition</span>
-            </label>
-          </div>
+          <label for="health-goal">Health Goals *</label>
+          <select id="health-goal" required>
+            <option value="">Select a health goal</option>
+            <option value="lose-weight">Lose weight</option>
+            <option value="maintain-health">Maintain health</option>
+            <option value="manage-condition">Manage condition</option>
+            <option value="pregnancy-nutrition">Pregnancy nutrition</option>
+          </select>
           <span class="error-message"></span>
         </div>
 
-        <!-- Health Conditions -->
         <div class="form-group">
-          <label>Health Conditions</label>
-          <div class="checkbox-chip-grid">
-            <label class="checkbox-chip">
-              <input type="checkbox" name="health-condition" value="diabetes" />
-              <span>Diabetes</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="health-condition" value="hypertension" />
-              <span>Hypertension</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="health-condition" value="sickle-cell" />
-              <span>Sickle Cell</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="health-condition" value="other" />
-              <span>Other</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="health-condition" value="none" />
-              <span>None</span>
-            </label>
-          </div>
+          <label for="health-conditions">Health Conditions (multi-select)</label>
+          <select id="health-conditions" multiple size="6">
+            <option value="diabetes">Diabetes</option>
+            <option value="hypertension">Hypertension</option>
+            <option value="sickle-cell">Sickle Cell</option>
+            <option value="other">Other</option>
+            <option value="none">None</option>
+          </select>
+          <p class="field-hint">Hold Ctrl (Windows) or Cmd (Mac) to select multiple options.</p>
+          <span class="error-message"></span>
         </div>
 
-        <!-- Dietary Preferences -->
-        <div class="form-group">
-          <label>Dietary Preferences</label>
-          <div class="checkbox-chip-grid">
-            <label class="checkbox-chip">
-              <input type="checkbox" name="dietary-pref" value="high-protein" />
-              <span>High protein</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="dietary-pref" value="low-carb" />
-              <span>Low carb</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="dietary-pref" value="vegetarian" />
-              <span>Vegetarian</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="dietary-pref" value="traditional-african" />
-              <span>Traditional African</span>
-            </label>
-          </div>
+        <div class="form-group conditional-field" id="other-condition-wrapper" hidden>
+          <label for="other-condition-text">Other Condition (please type)</label>
+          <input id="other-condition-text" type="text" placeholder="Type your condition" />
+          <span class="error-message"></span>
         </div>
 
-        <!-- Allergies -->
         <div class="form-group">
-          <label>Allergies</label>
-          <div class="checkbox-chip-grid">
-            <label class="checkbox-chip">
-              <input type="checkbox" name="allergy" value="nuts" />
-              <span>Nuts</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="allergy" value="dairy" />
-              <span>Dairy</span>
-            </label>
-            <label class="checkbox-chip">
-              <input type="checkbox" name="allergy" value="seafood" />
-              <span>Seafood</span>
-            </label>
-          </div>
+          <label for="dietary-preferences">Dietary Preferences (multi-select)</label>
+          <select id="dietary-preferences" multiple size="5">
+            <option value="high-protein">High protein</option>
+            <option value="low-carb">Low carb</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="traditional-african">Traditional African</option>
+          </select>
+          <p class="field-hint">Hold Ctrl (Windows) or Cmd (Mac) to select multiple options.</p>
+          <span class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="allergies">Allergies (multi-select)</label>
+          <select id="allergies" multiple size="4">
+            <option value="nuts">Nuts</option>
+            <option value="dairy">Dairy</option>
+            <option value="seafood">Seafood</option>
+          </select>
+          <p class="field-hint">Hold Ctrl (Windows) or Cmd (Mac) to select multiple options.</p>
+          <span class="error-message"></span>
         </div>
 
         <div class="form-actions">
@@ -236,29 +197,23 @@
         </div>
 
         <div class="form-group">
-          <label>Activity Level *</label>
-          <div class="radio-chip-grid">
-            <label class="radio-chip">
-              <input type="radio" name="activity-level" value="low" />
-              <span>Low</span>
-            </label>
-            <label class="radio-chip">
-              <input type="radio" name="activity-level" value="moderate" />
-              <span>Moderate</span>
-            </label>
-            <label class="radio-chip">
-              <input type="radio" name="activity-level" value="active" />
-              <span>Active</span>
-            </label>
-          </div>
+          <label for="activity-level">Activity Level *</label>
+          <select id="activity-level" required>
+            <option value="">Select activity level</option>
+            <option value="low">Low</option>
+            <option value="moderate">Moderate</option>
+            <option value="active">Active</option>
+          </select>
           <span class="error-message"></span>
         </div>
 
-        <div class="form-group checkbox-standalone">
-          <label>
-            <input type="checkbox" id="meal-plan-preference" />
-            <span>Do you want a personalized weekly meal plan?</span>
-          </label>
+        <div class="form-group">
+          <label for="meal-plan-preference">Do you want a personalized weekly meal plan?</label>
+          <select id="meal-plan-preference">
+            <option value="no" selected>No</option>
+            <option value="yes">Yes</option>
+          </select>
+          <span class="error-message"></span>
         </div>
 
         <div class="form-actions">

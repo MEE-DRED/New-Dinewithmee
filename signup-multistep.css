@@ -191,6 +191,25 @@
   transition: all 0.25s ease;
 }
 
+.form-group select[multiple] {
+  min-height: 132px;
+  padding: 10px;
+}
+
+.form-group select[multiple] option {
+  padding: 6px 8px;
+}
+
+.field-hint {
+  margin: 6px 0 0;
+  color: var(--signup-text-light);
+  font-size: 0.8rem;
+}
+
+.conditional-field[hidden] {
+  display: none !important;
+}
+
 .form-group input::placeholder {
   color: var(--signup-text-light);
 }

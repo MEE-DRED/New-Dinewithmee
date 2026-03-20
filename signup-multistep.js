@@ -10,7 +10,9 @@ const form = document.getElementById('signup-form');
  * Initialize the form on page load
  */
 document.addEventListener('DOMContentLoaded', () => {
+  if (!form) return;
   attachFormListeners();
+  toggleOtherConditionField();
   updateProgressUI();
 });
 
@@ -29,6 +31,9 @@ function attachFormListeners() {
     });
   });
 
+  const healthConditions = document.getElementById('health-conditions');
+  healthConditions?.addEventListener('change', toggleOtherConditionField);
+
   // Form submission
   form.addEventListener('submit', handleFormSubmit);
 }
@@ -37,7 +42,7 @@ function attachFormListeners() {
  * Navigate to the next step
  */
 function nextStep() {
-  if (validateCurrentStep()) {
+  if (currentStep < totalSteps && validateCurrentStep()) {
     currentStep++;
     updateProgressUI();
   }
@@ -57,26 +62,36 @@ function previousStep() {
  * Validate the current step's required fields
  */
 function validateCurrentStep() {
+  clearCurrentStepErrors();
+
   const currentStepSection = document.querySelector(`section[data-step="${currentStep}"]`);
+  if (!currentStepSection) return false;
+
   let isValid = true;
 
   // Get all required inputs in this step
   const requiredFields = currentStepSection.querySelectorAll('[required]');
-  const radioGroups = currentStepSection.querySelectorAll('input[type="radio"][required]');
 
   // Check text inputs, emails, numbers, selects
   requiredFields.forEach(field => {
-    const errorDisplay = field.parentElement.querySelector('.error-message');
-    const value = field.value.trim();
+    const value = typeof field.value === 'string' ? field.value.trim() : field.value;
+    const isMultipleSelect = field.tagName === 'SELECT' && field.multiple;
+    const hasMultipleSelection = isMultipleSelect && Array.from(field.selectedOptions).length > 0;
 
-    if (value === '' || value === 0) {
+    if (isMultipleSelect && !hasMultipleSelection) {
+      isValid = false;
+      showFieldError(field, 'Please select at least one option');
+      return;
+    }
+
+    if (!isMultipleSelect && (value === '' || Number(value) === 0)) {
       isValid = false;
       if (field.type === 'email') {
-        showFieldError(field, 'Please enter a valid email address');
+        showFieldError(field, 'Email is required');
       } else if (field.type === 'password') {
         showFieldError(field, 'Password is required');
       } else if (field.type === 'number') {
-        showFieldError(field, `${field.placeholder || field.name} is required`);
+        showFieldError(field, 'This field is required');
       } else {
         showFieldError(field, 'This field is required');
       }
@@ -89,36 +104,39 @@ function validateCurrentStep() {
       showFieldError(field, 'Password must be at least 6 characters');
       isValid = false;
     }
+
+    if (field.type === 'email' && value && !isValidEmail(value)) {
+      showFieldError(field, 'Please enter a valid email address');
+      isValid = false;
+    }
+
+    if (field.type === 'number' && value && Number(value) <= 0) {
+      showFieldError(field, 'Please enter a valid value');
+      isValid = false;
+    }
   });
 
-  // Check if at least one radio button is selected in groups marked as required
   if (currentStep === 2) {
-    const healthGoalChecked = document.querySelector('input[name="health-goal"]:checked');
-    if (!healthGoalChecked) {
-      const errorDisplay = document.querySelector('section[data-step="2"] .form-group:first-child .error-message');
-      if (errorDisplay) {
-        errorDisplay.textContent = 'Please select a health goal';
-        errorDisplay.style.display = 'block';
-      }
+    const healthGoalSelect = document.getElementById('health-goal');
+    if (healthGoalSelect && !healthGoalSelect.value) {
+      showFieldError(healthGoalSelect, 'Please select a health goal');
+      isValid = false;
+    }
+
+    const healthConditionValues = getSelectedValues('health-conditions');
+    const hasOther = healthConditionValues.includes('other');
+    const otherConditionInput = document.getElementById('other-condition-text');
+
+    if (hasOther && otherConditionInput && !otherConditionInput.value.trim()) {
+      showFieldError(otherConditionInput, 'Please type your other condition');
       isValid = false;
     }
   }
 
   if (currentStep === 3) {
-    const activityLevelChecked = document.querySelector('input[name="activity-level"]:checked');
-    if (!activityLevelChecked) {
-      // Find the activity level error message
-      const step3Section = document.querySelector('section[data-step="3"]');
-      const activityGroup = Array.from(step3Section.querySelectorAll('.form-group')).find(
-        group => group.querySelector('input[name="activity-level"]')
-      );
-      if (activityGroup) {
-        const errorDisplay = activityGroup.querySelector('.error-message');
-        if (errorDisplay) {
-          errorDisplay.textContent = 'Please select your activity level';
-          errorDisplay.style.display = 'block';
-        }
-      }
+    const activityLevelSelect = document.getElementById('activity-level');
+    if (activityLevelSelect && !activityLevelSelect.value) {
+      showFieldError(activityLevelSelect, 'Please select your activity level');
       isValid = false;
     }
   }
@@ -131,7 +149,8 @@ function validateCurrentStep() {
  */
 function showFieldError(field, message) {
   field.classList.add('error');
-  const errorDisplay = field.parentElement.querySelector('.error-message');
+  const wrapper = field.closest('.form-group');
+  const errorDisplay = wrapper ? wrapper.querySelector('.error-message') : null;
   if (errorDisplay) {
     errorDisplay.textContent = message;
     errorDisplay.style.display = 'block';
@@ -143,10 +162,57 @@ function showFieldError(field, message) {
  */
 function clearFieldError(field) {
   field.classList.remove('error');
-  const errorDisplay = field.parentElement.querySelector('.error-message');
+  const wrapper = field.closest('.form-group');
+  const errorDisplay = wrapper ? wrapper.querySelector('.error-message') : null;
   if (errorDisplay) {
     errorDisplay.textContent = '';
     errorDisplay.style.display = 'none';
+  }
+}
+
+function clearCurrentStepErrors() {
+  const currentStepSection = document.querySelector(`section[data-step="${currentStep}"]`);
+  if (!currentStepSection) return;
+
+  currentStepSection.querySelectorAll('input, select, textarea').forEach(field => {
+    field.classList.remove('error');
+  });
+
+  currentStepSection.querySelectorAll('.error-message').forEach(errorDisplay => {
+    errorDisplay.textContent = '';
+    errorDisplay.style.display = 'none';
+  });
+}
+
+function getSelectedValues(selectId) {
+  const select = document.getElementById(selectId);
+  if (!select) return [];
+  return Array.from(select.selectedOptions).map(option => option.value);
+}
+
+function toggleOtherConditionField() {
+  const healthConditions = document.getElementById('health-conditions');
+  const otherWrapper = document.getElementById('other-condition-wrapper');
+  const otherInput = document.getElementById('other-condition-text');
+
+  if (!healthConditions || !otherWrapper || !otherInput) return;
+
+  const selectedValues = Array.from(healthConditions.selectedOptions).map(option => option.value);
+  const hasNone = selectedValues.includes('none');
+
+  if (hasNone && selectedValues.length > 1) {
+    Array.from(healthConditions.options).forEach(option => {
+      option.selected = option.value === 'none';
+    });
+  }
+
+  const showOther = selectedValues.includes('other') && !selectedValues.includes('none');
+  otherWrapper.hidden = !showOther;
+  otherInput.required = showOther;
+
+  if (!showOther) {
+    otherInput.value = '';
+    clearFieldError(otherInput);
   }
 }
 
@@ -204,21 +270,19 @@ function handleFormSubmit(e) {
     country: document.getElementById('country').value.trim(),
 
     // Step 2: Health Profile
-    healthGoal: document.querySelector('input[name="health-goal"]:checked')?.value || '',
-    healthConditions: Array.from(document.querySelectorAll('input[name="health-condition"]:checked'))
-      .map(input => input.value),
-    dietaryPreferences: Array.from(document.querySelectorAll('input[name="dietary-pref"]:checked'))
-      .map(input => input.value),
-    allergies: Array.from(document.querySelectorAll('input[name="allergy"]:checked'))
-      .map(input => input.value),
+    healthGoal: document.getElementById('health-goal').value,
+    healthConditions: getSelectedValues('health-conditions'),
+    otherCondition: document.getElementById('other-condition-text').value.trim(),
+    dietaryPreferences: getSelectedValues('dietary-preferences'),
+    allergies: getSelectedValues('allergies'),
 
     // Step 3: Lifestyle & Personalization
     age: document.getElementById('age').value,
     gender: document.getElementById('gender').value,
     weight: document.getElementById('weight').value,
     height: document.getElementById('height').value,
-    activityLevel: document.querySelector('input[name="activity-level"]:checked')?.value || '',
-    wantsMealPlan: document.getElementById('meal-plan-preference').checked,
+    activityLevel: document.getElementById('activity-level').value,
+    wantsMealPlan: document.getElementById('meal-plan-preference').value === 'yes',
     timestamp: new Date().toISOString(),
   };
 
@@ -243,34 +307,42 @@ function submitSignupForm(formData) {
     // In production, you would send this to your backend
     console.log('Submitting form data:', formData);
 
-    // Store in sessionStorage for now (can be replaced with API call)
-    sessionStorage.setItem('signupFormData', JSON.stringify(formData));
+    const authUser = {
+      name: formData.fullName,
+      email: formData.email,
+      country: formData.country,
+      initials: getInitials(formData.fullName),
+      signedInAt: new Date().toISOString(),
+    };
 
-    // Show success message or redirect
-    handleSignupSuccess(formData);
+    // Store signup profile and auto-login user state.
+    sessionStorage.setItem('signupFormData', JSON.stringify(formData));
+    localStorage.setItem('dwm_user', JSON.stringify(authUser));
+    localStorage.setItem('dwm_logged_in', 'true');
+    window.dispatchEvent(new CustomEvent('dwm:auth-changed', { detail: authUser }));
+
+    // Redirect as logged-in user.
+    handleSignupSuccess(authUser);
 
     // Reset button
     submitButton.disabled = false;
     submitButton.textContent = originalText;
-  }, 1500);
+  }, 900);
 }
 
 /**
  * Handle successful form submission
  */
-function handleSignupSuccess(formData) {
-  // Show success modal or redirect to confirmation page
-  alert(`Account creation successful for ${formData.fullName}!\n\nYou can now log in with your email.`);
+function handleSignupSuccess(authUser) {
+  const firstName = authUser.name.split(' ')[0] || 'there';
+  alert(`Welcome, ${firstName}! Your account was created and you are now logged in.`);
+  window.location.href = 'index.html';
+}
 
-  // Redirect to login or dashboard
-  // For now, just reset the form
-  form.reset();
-  currentStep = 1;
-  updateProgressUI();
-
-  // In production, redirect to:
-  // window.location.href = '/dashboard.html';
-  // or window.location.href = '/verify-email.html';
+function getInitials(fullName) {
+  if (!fullName) return 'U';
+  const parts = fullName.trim().split(/\s+/).filter(Boolean);
+  return parts.slice(0, 2).map(part => part[0].toUpperCase()).join('') || 'U';
 }
 
 /**

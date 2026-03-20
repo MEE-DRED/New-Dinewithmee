@@ -443,6 +443,11 @@ function ensureCheckoutModal() {
               <input id="checkout-phone" name="phone" type="tel" placeholder="e.g. +2507XXXXXXXX" required />
             </div>
 
+            <div class="form-group">
+              <label for="checkout-order-note">Order Note</label>
+              <textarea id="checkout-order-note" name="order-note" rows="3" placeholder="Add meal or delivery notes (optional)"></textarea>
+            </div>
+
             <h4>Payment Option</h4>
             <div class="payment-options-grid" id="payment-options-grid">
               <label class="payment-option active">
@@ -498,6 +503,7 @@ function ensureCheckoutModal() {
     const area = document.getElementById('checkout-area');
     const address = document.getElementById('checkout-address');
     const phone = document.getElementById('checkout-phone');
+    const orderNote = document.getElementById('checkout-order-note');
     const paymentMethod = checkoutForm.querySelector('input[name="payment-method"]:checked');
 
     if (!country?.value.trim() || !area?.value.trim() || !address?.value.trim() || !phone?.value.trim()) {
@@ -510,7 +516,8 @@ function ensureCheckoutModal() {
       return;
     }
 
-    showToast(`Order placed successfully via ${paymentMethod.value}.`);
+    const noteSuffix = orderNote?.value.trim() ? ' Order note saved.' : '';
+    showToast(`Order placed successfully via ${paymentMethod.value}.${noteSuffix}`);
     Cart.save([]);
     Cart.renderSidebar();
     renderCheckoutSummary();
@@ -901,6 +908,56 @@ function closeMealDetail() {
 }
 
 // ── Navbar and UI Init ───────────────────────
+function getStoredUser() {
+  try {
+    const raw = localStorage.getItem('dwm_user');
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function deriveInitials(name) {
+  if (!name || typeof name !== 'string') return 'U';
+  const pieces = name.trim().split(/\s+/).filter(Boolean);
+  return pieces.slice(0, 2).map(piece => piece[0].toUpperCase()).join('') || 'U';
+}
+
+function updateNavbarAuthUI() {
+  const navActions = document.querySelector('.nav-actions');
+  if (!navActions) return;
+
+  const loginLink = navActions.querySelector('a.btn-login[href*="login"]');
+  const joinFreeLink = navActions.querySelector('a.btn-primary[href*="signup"]');
+  let initialsBadge = navActions.querySelector('.nav-user-initials');
+  const user = getStoredUser();
+
+  if (!user || !user.name) {
+    if (loginLink) loginLink.style.display = '';
+    if (initialsBadge) initialsBadge.remove();
+    return;
+  }
+
+  if (loginLink) loginLink.style.display = 'none';
+
+  if (!initialsBadge) {
+    initialsBadge = document.createElement('span');
+    initialsBadge.className = 'nav-user-initials';
+    const hamburger = navActions.querySelector('.hamburger');
+    navActions.insertBefore(initialsBadge, hamburger || null);
+  }
+
+  initialsBadge.textContent = deriveInitials(user.name);
+  initialsBadge.title = user.name;
+  initialsBadge.setAttribute('aria-label', `Signed in as ${user.name}`);
+
+  if (joinFreeLink) {
+    joinFreeLink.textContent = 'Join Free';
+  }
+}
+
 function initNavbar() {
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('nav-links');
@@ -938,6 +995,11 @@ function initNavbar() {
   });
 
   Cart.updateCount();
+  updateNavbarAuthUI();
+  window.addEventListener('dwm:auth-changed', updateNavbarAuthUI);
+  window.addEventListener('storage', event => {
+    if (event.key === 'dwm_user') updateNavbarAuthUI();
+  });
 }
 
 // ── Form Validation ───────────────────────────
