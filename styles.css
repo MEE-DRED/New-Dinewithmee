@@ -5192,4 +5192,329 @@ footer {
   }
 }
 
+/* ============ PROGRAM NAVIGATION + UX (ADDITIVE) ============ */
+#clinical-wellness .wellness-program-card,
+#clinical-wellness .program-item {
+  opacity: 0.72;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  will-change: transform, opacity, box-shadow;
+}
+
+#clinical-wellness .wellness-program-card:hover,
+#clinical-wellness .program-item:hover,
+#clinical-wellness .wellness-program-card.is-active,
+#clinical-wellness .program-item.is-active {
+  opacity: 1;
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+#clinical-wellness .wellness-program-card:focus-visible,
+#clinical-wellness .program-item:focus-visible {
+  outline: 2px solid rgba(201, 166, 70, 0.8);
+  outline-offset: 2px;
+}
+
+#clinical-wellness .program-link,
+#clinical-wellness .wellness-program-card .btn-secondary,
+#clinical-wellness #program-preview-link,
+.programs-page-btn,
+.program-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #c9a646;
+  color: #0d3b2b;
+  border: 1px solid #c9a646;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+#clinical-wellness .program-link:hover,
+#clinical-wellness .wellness-program-card .btn-secondary:hover,
+#clinical-wellness #program-preview-link:hover,
+.programs-page-btn:hover,
+.program-nav-btn:hover {
+  background: #a8842f;
+  border-color: #a8842f;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+a[data-program-nav].is-loading {
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.program-preview-panel {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(201, 166, 70, 0.38);
+  background:
+    linear-gradient(145deg, rgba(7, 39, 29, 0.96), rgba(14, 61, 46, 0.9)),
+    radial-gradient(circle at 90% 10%, rgba(201, 166, 70, 0.2), transparent 40%);
+  box-shadow: var(--shadow-sm);
+}
+
+.program-preview-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+
+.program-preview-panel h3 {
+  color: var(--white);
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  margin-bottom: 8px;
+}
+
+#program-preview-meta {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+#program-preview-text {
+  color: rgba(255, 255, 255, 0.86);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.programs-page-section {
+  padding-top: 94px;
+}
+
+.programs-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.programs-page-card {
+  background: var(--white);
+  border: 1px solid rgba(13, 59, 43, 0.12);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.programs-page-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.programs-page-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.programs-page-content {
+  padding: 18px;
+}
+
+.programs-page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.programs-page-content h3 {
+  color: var(--green-deep);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.programs-page-content p {
+  color: var(--text-mid);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+.program-article-shell {
+  padding-top: 108px;
+  background:
+    linear-gradient(180deg, rgba(8, 38, 29, 0.95), rgba(11, 61, 46, 0.96));
+}
+
+.program-article {
+  max-width: 920px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(13, 59, 43, 0.16);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 28px;
+}
+
+.program-article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.program-article-meta span {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--green-pale);
+  color: var(--green-deep);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.program-article-header h1 {
+  color: var(--green-deep);
+  font-size: clamp(1.65rem, 3vw, 2.3rem);
+  margin-bottom: 12px;
+}
+
+.program-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.program-tag-chip {
+  background: rgba(201, 166, 70, 0.16);
+  color: var(--green-deep);
+  border: 1px solid rgba(201, 166, 70, 0.35);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.program-article-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.top-actions {
+  margin-bottom: 14px;
+}
+
+.bottom-actions {
+  margin-top: 24px;
+}
+
+.program-nav-btn.secondary {
+  background: transparent;
+  color: var(--green-deep);
+  border: 1px solid rgba(13, 59, 43, 0.28);
+}
+
+.program-nav-btn.secondary:hover {
+  color: var(--white);
+}
+
+.program-section-block {
+  border-top: 1px solid rgba(13, 59, 43, 0.1);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.program-section-block h2 {
+  color: var(--green-deep);
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.program-section-block p {
+  color: var(--text-mid);
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+
+.program-list {
+  list-style: disc;
+  padding-left: 20px;
+  color: var(--text-mid);
+}
+
+.program-list li {
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+.program-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(13, 59, 43, 0.14);
+  border-radius: var(--radius-sm);
+}
+
+.program-meal-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.program-meal-table th,
+.program-meal-table td {
+  border-bottom: 1px solid rgba(13, 59, 43, 0.1);
+  padding: 10px;
+  vertical-align: top;
+  text-align: left;
+  color: var(--text-mid);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.program-meal-table th {
+  background: rgba(13, 59, 43, 0.08);
+  color: var(--green-deep);
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+}
+
+.program-empty {
+  color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+  .program-article {
+    padding: 18px;
+  }
+
+  .program-article-actions {
+    flex-direction: column;
+  }
+
+  #clinical-wellness .program-link,
+  #clinical-wellness .wellness-program-card .btn-secondary,
+  #clinical-wellness #program-preview-link,
+  .programs-page-btn,
+  .program-nav-btn {
+    width: 100%;
+  }
+}
+
 

@@ -1164,6 +1164,7 @@ let currentMealSort = 'featured';
 let currentMaxCalories = Number.POSITIVE_INFINITY;
 let currentMinProtein = 0;
 let favoritesOnly = false;
+let activeProgram = 'clinical';
 
 const MEALS_PER_PAGE = 12;
 let mealsVisibleCount = MEALS_PER_PAGE;
@@ -1305,6 +1306,173 @@ function initExpandableSections() {
 
   setupGroup('[data-about-card]', '[data-about-more]', '[data-about-toggle]', 'Read Less');
   setupGroup('[data-guide-card]', '[data-guide-more]', '[data-guide-toggle]', 'Hide Guide');
+}
+
+function getClinicalProgramDataset() {
+  if (Array.isArray(window.DWM_PROGRAMS) && window.DWM_PROGRAMS.length > 0) {
+    return window.DWM_PROGRAMS;
+  }
+
+  return [
+    {
+      id: 'chronic-disease',
+      title: 'Building a Balanced African Meal Plan for Chronic Disease Prevention',
+      date: 'March 19, 2026',
+      readTime: '6 min read',
+      category: 'Clinical Grade',
+      preview:
+        'A practical weekly framework using African whole foods to reduce long-term risk of diabetes, hypertension, and obesity.',
+    },
+    {
+      id: 'maternal',
+      title: 'Maternal Nutrition African Foods that Support Pregnancy',
+      date: 'March 19, 2026',
+      readTime: '6 min read',
+      category: 'Maternal Focus',
+      preview:
+        'A trimester-aware nutrition article covering folate, iron, DHA, hydration, and practical African meal ideas for pregnancy.',
+    },
+    {
+      id: 'sickle-cell',
+      title: 'Nutrition Strategies for Sickle Cell Patients Using African Ingredients',
+      date: 'March 19, 2026',
+      readTime: '6 min read',
+      category: 'Sickle Cell Support',
+      preview:
+        'Food-based strategies to support hemoglobin health, hydration, and oxidative stress reduction for people living with sickle cell disease.',
+    },
+    {
+      id: 'obesity',
+      title: 'Combating Obesity with Traditional African Meals',
+      date: 'March 19, 2026',
+      readTime: '6 min read',
+      category: 'General Wellness',
+      preview:
+        'A realistic approach to sustainable weight management using high-fiber traditional meals, portion control, and lifestyle consistency.',
+    },
+    {
+      id: 'hypertension',
+      title: 'Heart-Healthy African Diet for Hypertension',
+      date: 'March 19, 2026',
+      readTime: '6 min read',
+      category: 'Hypertension Focus',
+      preview:
+        'A low-sodium, potassium-forward meal structure using familiar African ingredients to support blood pressure and cardiovascular health.',
+    },
+    {
+      id: 'diabetes',
+      title: 'African Superfoods to Manage Diabetes',
+      date: 'March 19, 2026',
+      readTime: '6 min read',
+      category: 'Diabetes Focus',
+      preview:
+        'A low-glycemic, high-fiber strategy built around African superfoods to stabilize glucose and improve daily diabetes control.',
+    },
+  ];
+}
+
+function updateProgramPreviewPanel(program) {
+  const panel = document.getElementById('program-preview-panel');
+  if (!panel || !program) return;
+
+  const titleEl = document.getElementById('program-preview-title');
+  const metaEl = document.getElementById('program-preview-meta');
+  const textEl = document.getElementById('program-preview-text');
+  const linkEl = document.getElementById('program-preview-link');
+
+  if (titleEl) titleEl.textContent = program.title || '';
+  if (metaEl) {
+    const pieces = [program.date, program.readTime, program.category].filter(Boolean);
+    metaEl.textContent = pieces.join(' • ');
+  }
+  if (textEl) textEl.textContent = program.preview || program.content || '';
+  if (linkEl) {
+    linkEl.href = `program.html?id=${program.id}`;
+  }
+}
+
+function initClinicalProgramFilter() {
+  const cards = Array.from(
+    document.querySelectorAll('#clinical-wellness .program-item, #clinical-wellness .wellness-program-card')
+  );
+  if (!cards.length) return;
+
+  const dataset = getClinicalProgramDataset();
+  const byId = new Map(dataset.map(program => [program.id, program]));
+
+  const setActiveCard = (card, shouldScroll) => {
+    const programId = card?.dataset?.programId;
+    if (!programId || !byId.has(programId)) return;
+
+    cards.forEach(item => item.classList.remove('is-active'));
+    card.classList.add('is-active');
+
+    activeProgram = card.dataset.programCategory || 'clinical';
+    updateProgramPreviewPanel(byId.get(programId));
+
+    if (shouldScroll) {
+      const panel = document.getElementById('program-preview-panel');
+      if (panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  };
+
+  cards.forEach(card => {
+    card.style.cursor = 'pointer';
+
+    card.addEventListener('mouseenter', () => {
+      setActiveCard(card, false);
+    });
+
+    card.addEventListener('focusin', () => {
+      setActiveCard(card, false);
+    });
+
+    card.addEventListener('click', event => {
+      if (event.target.closest('a')) return;
+      setActiveCard(card, true);
+    });
+
+    card.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      setActiveCard(card, true);
+      const actionLink = card.querySelector('a[href]');
+      if (actionLink) actionLink.click();
+    });
+  });
+
+  const firstCard = cards.find(card => byId.has(card.dataset.programId)) || cards[0];
+  if (firstCard) {
+    setActiveCard(firstCard, false);
+  }
+}
+
+function initProgramNavigationLinks() {
+  const links = Array.from(document.querySelectorAll('a[data-program-nav]'));
+  if (!links.length) return;
+
+  links.forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (link.target === '_blank') return;
+
+      const destination = link.getAttribute('href');
+      if (!destination || destination.startsWith('#')) return;
+
+      event.preventDefault();
+      const baseLabel = link.dataset.baseLabel || link.textContent.trim();
+      link.dataset.baseLabel = baseLabel;
+      link.textContent = 'Opening...';
+      link.classList.add('is-loading');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        window.location.href = destination;
+      }, 160);
+    });
+  });
 }
 
 function getFilteredMeals() {
@@ -2077,5 +2245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLoginForm();
   initSignupForm();
   initBookingForm();
+  initClinicalProgramFilter();
+  initProgramNavigationLinks();
   initScrollAnimation();
 });
