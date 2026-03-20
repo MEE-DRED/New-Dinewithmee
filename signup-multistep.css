@@ -202,8 +202,8 @@
 
 .form-group select[multiple]:focus {
   outline: none;
-  border-color: var(--signup-brand);
-  box-shadow: 0 0 0 3px rgba(0, 102, 51, 0.08);
+  border-color: var(--signup-primary);
+  box-shadow: 0 0 0 3px rgba(13, 59, 43, 0.08);
 }
 
 .form-group select[multiple] option {
