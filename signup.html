@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up | Dine with Mee</title>
+  <meta name="description" content="Create your Dine with Mee account and save your health and meal preferences." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html#home" class="nav-logo">
+    <div class="logo-mark">D</div>
+    <span class="logo-text">Dine with <span>Mee</span></span>
+  </a>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="health.html">Health Hub</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <a href="login.html" class="btn-login">Log in</a>
+    <a href="signup.html" class="btn-primary">Sign Up</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<section class="form-section">
+  <div class="form-card signup-form-card">
+    <h2>Create Your Account</h2>
+    <p class="sub">Personalize your nutrition profile in three quick steps.</p>
+
+    <form id="signup-form" class="signup-multistep" novalidate>
+      <div class="signup-progress">
+        <div class="signup-progress-step active">Step 1 Personal</div>
+        <div class="signup-progress-step">Step 2 Health Goals</div>
+        <div class="signup-progress-step">Step 3 Lifestyle</div>
+      </div>
+
+      <section class="signup-step active" data-step="1">
+        <div class="checkout-fields-grid">
+          <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input id="first-name" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input id="last-name" type="text" required />
+          </div>
+        </div>
+
+        <div class="checkout-fields-grid">
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input id="signup-email" type="email" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-phone">Phone Number</label>
+            <input id="signup-phone" type="tel" required />
+          </div>
+        </div>
+
+        <div class="checkout-fields-grid">
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input id="signup-password" type="password" required />
+          </div>
+          <div class="form-group">
+            <label for="signup-country">Country</label>
+            <input id="signup-country" type="text" required />
+          </div>
+        </div>
+
+        <div class="checkout-fields-grid">
+          <div class="form-group">
+            <label for="signup-gender">Select Gender</label>
+            <select id="signup-gender" required>
+              <option value="">Choose one</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="prefer-not-to-say">Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="signup-address">Address</label>
+            <input id="signup-address" type="text" required />
+          </div>
+        </div>
+
+        <div class="signup-actions">
+          <span></span>
+          <button class="btn-step next" data-step-next>Next Step</button>
+        </div>
+      </section>
+
+      <section class="signup-step" data-step="2" hidden>
+        <div class="form-group">
+          <label>Select health goals</label>
+          <div class="checkbox-chip-grid">
+            <label class="checkbox-chip"><input type="checkbox" name="health-goals" value="Diabetes" /> Diabetes</label>
+            <label class="checkbox-chip"><input type="checkbox" name="health-goals" value="Hypertension" /> Hypertension</label>
+            <label class="checkbox-chip"><input type="checkbox" name="health-goals" value="Weight loss" /> Weight loss</label>
+            <label class="checkbox-chip"><input type="checkbox" name="health-goals" value="Maternal health" /> Maternal health</label>
+            <label class="checkbox-chip"><input type="checkbox" name="health-goals" value="Sickle Cell" /> Sickle Cell</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dietary-preferences">Dietary preferences (optional)</label>
+          <textarea id="dietary-preferences" rows="3" placeholder="e.g. low-carb, high-protein, vegetarian"></textarea>
+        </div>
+
+        <div class="signup-actions">
+          <button class="btn-step" data-step-prev>Back</button>
+          <button class="btn-step next" data-step-next>Next Step</button>
+        </div>
+      </section>
+
+      <section class="signup-step" data-step="3" hidden>
+        <div class="form-group">
+          <label>Preferred meal times</label>
+          <div class="checkbox-chip-grid">
+            <label class="checkbox-chip"><input type="checkbox" name="meal-times" value="Breakfast" /> Breakfast</label>
+            <label class="checkbox-chip"><input type="checkbox" name="meal-times" value="Lunch" /> Lunch</label>
+            <label class="checkbox-chip"><input type="checkbox" name="meal-times" value="Dinner" /> Dinner</label>
+            <label class="checkbox-chip"><input type="checkbox" name="meal-times" value="Snacks" /> Snacks</label>
+          </div>
+        </div>
+
+        <div class="checkout-fields-grid">
+          <div class="form-group">
+            <label for="allergies">Allergies (optional)</label>
+            <input id="allergies" type="text" placeholder="e.g. nuts, shellfish" />
+          </div>
+          <div class="form-group">
+            <label for="lifestyle">Lifestyle</label>
+            <select id="lifestyle" required>
+              <option value="">Select lifestyle</option>
+              <option value="sedentary">Sedentary</option>
+              <option value="active">Active</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="checkout-fields-grid">
+          <div class="form-group">
+            <label for="delivery-country">Delivery Country</label>
+            <input id="delivery-country" type="text" required />
+          </div>
+          <div class="form-group">
+            <label for="delivery-area">Delivery Area</label>
+            <input id="delivery-area" type="text" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-chip"><input type="checkbox" id="save-preferences" /> Save preferences</label>
+        </div>
+
+        <div class="signup-actions">
+          <button class="btn-step" data-step-prev>Back</button>
+          <button type="submit" class="btn-primary">Create Account</button>
+        </div>
+      </section>
+    </form>
+
+    <p class="form-footer">Already have an account? <a href="login.html">Log In</a></p>
+  </div>
+</section>
+
+<script>
+  window.__DWM_INTEGRATION_AUTH__ = true;
+</script>
+<script src="script.js"></script>
+<script type="module" src="dine-with-mee-integration/dine-with-mee-frontend/src/main.js"></script>
+</body>
+</html>
