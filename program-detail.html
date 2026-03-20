@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Explore All Programs | Dine with Mee</title>
-  <meta name="description" content="Browse all Dine with Mee programs through a clean editorial index and open full program details." />
+  <title>Program Detail | Dine with Mee</title>
+  <meta name="description" content="Structured editorial program detail page for Dine with Mee clinical pathways." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
@@ -20,19 +20,19 @@
     </nav>
   </header>
 
-  <main class="programs-page-wrap">
-    <section class="programs-shell">
-      <header class="programs-header">
-        <p class="category">Clinical Wellness Programs</p>
-        <h1>Explore All Programs</h1>
-        <p>Choose any pathway below to open the full editorial article with implementation guidance and practical nutrition structure.</p>
-      </header>
+  <main class="article-page-wrap">
+    <section class="article-shell">
+      <div class="article-hero">
+        <p class="category" id="article-category">Program Category</p>
+        <h1 id="article-title">Program Title</h1>
+        <div class="meta" id="article-meta">March 19, 2026 • 6 min read</div>
+      </div>
 
-      <div id="programs-grid" class="programs-grid"></div>
+      <div class="article-content" id="article"></div>
 
       <div class="article-actions">
-        <button type="button" onclick="goHome()">Return Home</button>
-        <button type="button" onclick="openProgram('glycemic-reset')">Open Featured Program</button>
+        <button onclick="goHome()" type="button">Return Home</button>
+        <button onclick="goToPrograms()" type="button">Explore All Programs</button>
       </div>
     </section>
   </main>

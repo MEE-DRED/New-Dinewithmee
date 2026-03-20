@@ -1387,7 +1387,7 @@ function updateProgramPreviewPanel(program) {
   }
   if (textEl) textEl.textContent = program.preview || program.content || '';
   if (linkEl) {
-    linkEl.href = `program.html?id=${program.id}`;
+    linkEl.href = `program-detail.html?id=${program.id}`;
   }
 }
 
