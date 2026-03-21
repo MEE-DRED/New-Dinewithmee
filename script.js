@@ -1879,8 +1879,12 @@ function initMealLoadMore() {
   });
 }
 
+function isExternalMarketplaceIntegrationActive() {
+  return Boolean(window.__DWM_INTEGRATION_MARKETPLACE__ && window.__DWM_MARKETPLACE_RENDERED_BY_INTEGRATION__);
+}
+
 function renderMarketplaceMeals() {
-  if (window.__DWM_INTEGRATION_MARKETPLACE__) return;
+  if (isExternalMarketplaceIntegrationActive()) return;
   if (!document.getElementById('marketplace-meals')) return;
 
   const meals = sortMeals(getFilteredMeals());
@@ -1956,7 +1960,7 @@ function filterIngredients(region, btn) {
 }
 
 function initMarketplace() {
-  if (window.__DWM_INTEGRATION_MARKETPLACE__) return;
+  if (isExternalMarketplaceIntegrationActive()) return;
 
   if (!document.getElementById('marketplace-meals')) return;
   buildHealthFilterButtons();
